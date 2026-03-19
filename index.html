@@ -16,7 +16,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K5KGY0CJ85"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -64,7 +63,6 @@
         }
         .animate-confetti-fall { animation: confetti-fall linear forwards; }
 
-        /* Custom scrollbar for theme selector */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -78,7 +76,6 @@
 
     <div class="relative z-10 w-full max-w-md mx-auto min-h-[100dvh] flex flex-col items-center justify-center p-6 py-12 pb-20">
         
-        <!-- Step 1: Hook Screen -->
         <div id="step1" class="w-full flex flex-col items-center text-center space-y-8 animate-fade-in">
             <div class="relative">
                 <div class="absolute inset-0 bg-yellow-500/30 blur-2xl rounded-full animate-pulse"></div>
@@ -102,7 +99,6 @@
             </button>
         </div>
 
-        <!-- Step 2: Name & AI Theme Entry -->
         <div id="step2" class="w-full flex flex-col items-center text-center space-y-6 animate-fade-in-up hidden">
             <div class="bg-emerald-900/30 p-4 rounded-full border border-emerald-500/20 mb-2">
                 <i data-lucide="moon" class="w-12 h-12 text-yellow-400 animate-pulse" stroke-width="1.5"></i>
@@ -114,24 +110,56 @@
                 <form id="nameForm" class="w-full space-y-5">
                     <input id="nameInput" type="text" placeholder="Enter your name..." maxlength="25" required class="w-full px-6 py-4 bg-slate-900/60 border-2 border-emerald-800/50 rounded-2xl text-center text-xl font-medium text-white placeholder-emerald-700 focus:outline-none focus:border-yellow-500/50 focus:ring-4 focus:ring-yellow-500/10 transition-all backdrop-blur-sm shadow-inner" />
                     
-                    <!-- AI Theme Selector -->
                     <div class="space-y-2 text-left w-full">
                         <label class="text-xs text-emerald-300/80 font-medium uppercase tracking-wider pl-1">Choose a Vibe</label>
                         <div class="flex overflow-x-auto hide-scrollbar gap-2 pb-2" id="themeContainer">
-                            <!-- JS will populate these -->
-                        </div>
+                            </div>
                         <input type="hidden" id="selectedTheme" value="heartwarming">
                     </div>
 
-                    <button id="continueBtn" type="submit" disabled class="w-full py-4 bg-slate-800 text-slate-500 rounded-2xl font-bold text-lg transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 mt-2">
-                        Generate ✨ <i data-lucide="wand-2" class="w-5 h-5"></i>
+                    <button id="continueToPhotoBtn" type="submit" disabled class="w-full py-4 bg-slate-800 text-slate-500 rounded-2xl font-bold text-lg transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 mt-2">
+                        Next <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- Step 3: Fake Processing -->
-        <div id="step3" class="w-full flex flex-col items-center text-center space-y-10 animate-fade-in hidden">
+        <div id="step3" class="w-full flex flex-col items-center text-center space-y-6 animate-fade-in-up hidden">
+            <div class="space-y-2 w-full">
+                <h2 class="text-2xl font-bold text-yellow-50">Add a Photo 📸</h2>
+                <p class="text-emerald-200/60 text-sm">Make your greeting card extra special. (Optional)</p>
+            </div>
+
+            <div class="w-full space-y-6">
+                <div class="relative w-full">
+                    <input type="file" id="photoInput" accept="image/*" class="hidden" />
+                    <label for="photoInput" id="uploadLabel" class="w-full h-40 flex flex-col items-center justify-center border-2 border-dashed border-emerald-500/50 rounded-2xl bg-slate-900/60 hover:bg-slate-800/60 transition-colors cursor-pointer group">
+                        <i data-lucide="image-plus" class="w-10 h-10 text-emerald-400 group-hover:scale-110 transition-transform mb-3"></i>
+                        <span class="text-sm font-medium text-emerald-100">Tap to upload a photo</span>
+                    </label>
+                    
+                    <div id="photoPreviewContainer" class="hidden w-full relative">
+                        <div class="w-32 h-32 mx-auto rounded-full p-1 bg-gradient-to-br from-yellow-400 to-amber-600 shadow-xl">
+                            <img id="photoPreview" class="w-full h-full object-cover rounded-full border-4 border-slate-900" alt="Preview" />
+                        </div>
+                        <button id="changePhotoBtn" class="mt-4 text-sm text-yellow-400 hover:text-yellow-300 font-medium underline flex items-center justify-center w-full gap-1">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Change Photo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-3 w-full">
+                    <button id="generateWishBtn" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-bold text-lg transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                        Generate Magic ✨ <i data-lucide="wand-2" class="w-5 h-5"></i>
+                    </button>
+                    <button id="skipPhotoBtn" class="w-full py-4 bg-transparent text-slate-400 hover:text-white rounded-2xl font-bold transition-all flex items-center justify-center gap-2">
+                        Skip this step
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="step4" class="w-full flex flex-col items-center text-center space-y-10 animate-fade-in hidden">
             <div class="relative">
                 <i data-lucide="moon" class="w-24 h-24 text-yellow-400 animate-spin-slow opacity-80" stroke-width="1"></i>
                 <i data-lucide="star" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-yellow-200 animate-pulse"></i>
@@ -145,27 +173,30 @@
             </div>
         </div>
 
-        <!-- Step 4: Reward Screen -->
-        <div id="step4" class="w-full flex flex-col items-center text-center animate-fade-in hidden">
+        <div id="step5" class="w-full flex flex-col items-center text-center animate-fade-in hidden">
             <div id="confettiContainer"></div>
 
-            <div class="relative w-full max-w-sm bg-gradient-to-b from-emerald-900/80 to-slate-900/90 p-8 rounded-[2rem] border border-yellow-500/30 shadow-2xl backdrop-blur-md mb-8 mt-6">
-                <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-yellow-500/20 p-4 rounded-full border border-yellow-500/50 backdrop-blur-sm animate-float">
+            <div class="relative w-full max-w-sm bg-gradient-to-b from-emerald-900/80 to-slate-900/90 p-8 rounded-[2rem] border border-yellow-500/30 shadow-2xl backdrop-blur-md mb-8 mt-10">
+                
+                <div id="rewardPhotoContainer" class="absolute -top-16 left-1/2 -translate-x-1/2 hidden">
+                    <div class="w-28 h-28 rounded-full p-1 bg-gradient-to-br from-yellow-300 via-yellow-500 to-amber-700 shadow-[0_0_30px_rgba(245,158,11,0.4)] animate-float">
+                        <img id="rewardPhoto" class="w-full h-full object-cover rounded-full border-4 border-slate-900 bg-slate-800" alt="Your Photo" />
+                    </div>
+                </div>
+
+                <div id="rewardMoonContainer" class="absolute -top-12 left-1/2 -translate-x-1/2 bg-yellow-500/20 p-4 rounded-full border border-yellow-500/50 backdrop-blur-sm animate-float">
                     <i data-lucide="moon" class="w-10 h-10 text-yellow-400" fill="currentColor"></i>
                 </div>
 
-                <div class="mt-6 space-y-6 z-10 relative">
+                <div class="mt-8 space-y-6 z-10 relative">
                     <h2 id="wishName" class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500 drop-shadow-sm leading-tight"></h2>
-                    <p id="wishMessage" class="text-lg text-emerald-100 leading-relaxed font-medium">
-                        <!-- AI Message goes here -->
-                    </p>
+                    <p id="wishMessage" class="text-lg text-emerald-100 leading-relaxed font-medium"></p>
                     <div class="flex items-center justify-center gap-1 opacity-50 text-[10px] text-yellow-100 uppercase tracking-widest pt-2">
                         <i data-lucide="sparkles" class="w-3 h-3"></i> AI Generated
                     </div>
                 </div>
             </div>
 
-            <!-- Viral Loop Section -->
             <div class="w-full space-y-4 bg-slate-900/60 p-6 rounded-3xl border border-slate-800 z-10">
                 <h3 class="font-bold text-yellow-400 text-lg flex items-center justify-center gap-2">
                     <i data-lucide="share-2" class="w-5 h-5"></i> Send this surprise!
@@ -174,7 +205,7 @@
                 
                 <div class="grid grid-cols-1 gap-3 w-full pt-2">
                     <button id="shareWhatsApp" class="flex items-center justify-center gap-3 w-full py-3.5 bg-[#25D366] hover:bg-[#20b958] text-white rounded-xl font-bold transition-transform active:scale-95 shadow-lg">
-                        <i data-lucide="message-circle" class="w-5 h-5"></i> Share on WhatsApp
+                        <i data-lucide="message-circle" class="w-5 h-5"></i> WhatsApp
                     </button>
                     
                     <div class="flex gap-3">
@@ -197,15 +228,14 @@
     </div>
 
     <script>
-        // --- GEMINI API INTEGRATION ---
-        const apiKey = ""; // The execution environment provides the key at runtime
+        const apiKey = ""; // Will be passed in the environment execution or add your own
 
         async function fetchWithRetry(url, options, retries = 5) {
             const delays = [1000, 2000, 4000, 8000, 16000];
             for (let i = 0; i < retries; i++) {
                 try {
                     const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    if (!response.ok) throw new Error(`HTTP error!`);
                     return await response.json();
                 } catch (err) {
                     if (i === retries - 1) throw err;
@@ -216,15 +246,12 @@
 
         async function generateAIWish(name, theme) {
             const fallbackMessage = `"May Allah bless you with happiness, peace, and success in everything you do. Have a beautiful Eid!" ✨`;
-            
-            // If no API key is present (e.g. testing locally outside the platform), return fallback immediately
             if (!apiKey) return fallbackMessage;
 
-            const prompt = `Write a short, beautiful, and personalized Eid Mubarak greeting for a person named ${name}. The tone/vibe of the message should be: ${theme}. Keep it to a maximum of 2-3 sentences. Make it feel authentic, joyful, and magical. Use a couple of emojis naturally. Do not include hashtags.`;
-            
+            const prompt = `Write a short, beautiful, and personalized Eid Mubarak greeting for a person named ${name}. Tone: ${theme}. Max 2-3 sentences. Authentic, joyful, magical. Use emojis naturally.`;
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: "You are a warm, joyful Eid greeting generator. You output only the greeting message itself, with no intro or outro text." }] }
+                systemInstruction: { parts: [{ text: "You are a warm Eid greeting generator. Output only the message." }] }
             };
 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
@@ -235,20 +262,16 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
                 const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
                 return generatedText ? `"${generatedText.trim()}"` : fallbackMessage;
             } catch (error) {
-                console.error("Gemini API Error:", error);
                 return fallbackMessage;
             }
         }
 
-        // --- APP LOGIC ---
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             
-            // Generate Stars
             const starsContainer = document.getElementById('starsContainer');
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < 20; i++) {
@@ -264,7 +287,6 @@
             }
             starsContainer.appendChild(fragment);
 
-            // Populate Themes
             const themes = [
                 { id: 'heartwarming', label: '✨ Heartwarming' },
                 { id: 'success', label: '✨ Success & Wealth' },
@@ -280,9 +302,7 @@
                 btn.className = `whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all ${index === 0 ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50' : 'bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700'}`;
                 btn.innerText = theme.label;
                 btn.onclick = () => {
-                    // Reset all
                     Array.from(themeContainer.children).forEach(c => c.className = 'whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700');
-                    // Set active
                     btn.className = 'whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all bg-yellow-500/20 text-yellow-400 border border-yellow-500/50';
                     selectedThemeInput.value = theme.id;
                 };
@@ -290,24 +310,26 @@
             });
         });
 
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const step3 = document.getElementById('step3');
-        const step4 = document.getElementById('step4');
-        const nameInput = document.getElementById('nameInput');
-        const continueBtn = document.getElementById('continueBtn');
-        const wishName = document.getElementById('wishName');
-        const wishMessage = document.getElementById('wishMessage');
-        const selectedThemeInput = document.getElementById('selectedTheme');
-        
+        // Global State Variables
+        let globalName = "";
+        let globalTheme = "";
+        let globalPhotoData = null;
+
         function showStep(stepNum) {
-            step1.classList.add('hidden');
-            step2.classList.add('hidden');
-            step3.classList.add('hidden');
-            step4.classList.add('hidden');
+            for(let i=1; i<=5; i++) {
+                document.getElementById('step' + i).classList.add('hidden');
+            }
             document.getElementById('step' + stepNum).classList.remove('hidden');
         }
 
+        // DOM Elements
+        const nameInput = document.getElementById('nameInput');
+        const continueToPhotoBtn = document.getElementById('continueToPhotoBtn');
+        const photoInput = document.getElementById('photoInput');
+        const uploadLabel = document.getElementById('uploadLabel');
+        const photoPreviewContainer = document.getElementById('photoPreviewContainer');
+        const photoPreview = document.getElementById('photoPreview');
+        
         document.getElementById('unlockBtn').addEventListener('click', () => {
             showStep(2);
             nameInput.focus();
@@ -315,66 +337,104 @@
 
         nameInput.addEventListener('input', (e) => {
             if (e.target.value.trim() !== '') {
-                continueBtn.removeAttribute('disabled');
-                continueBtn.classList.remove('bg-slate-800', 'text-slate-500');
-                continueBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white');
+                continueToPhotoBtn.removeAttribute('disabled');
+                continueToPhotoBtn.classList.remove('bg-slate-800', 'text-slate-500');
+                continueToPhotoBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white');
             } else {
-                continueBtn.setAttribute('disabled', 'true');
-                continueBtn.classList.add('bg-slate-800', 'text-slate-500');
-                continueBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500', 'text-white');
+                continueToPhotoBtn.setAttribute('disabled', 'true');
+                continueToPhotoBtn.classList.add('bg-slate-800', 'text-slate-500');
+                continueToPhotoBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500', 'text-white');
             }
         });
 
-        document.getElementById('nameForm').addEventListener('submit', async (e) => {
+        // Step 2 -> Step 3
+        document.getElementById('nameForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const currentName = nameInput.value.trim();
-            const currentTheme = selectedThemeInput.value;
-            
-            if (currentName) {
-                nameInput.blur(); // Close mobile keyboard
-                wishName.innerHTML = `Eid Mubarak,<br/>${currentName}! 🌙`;
-                
-                if (typeof gtag === 'function') gtag('event', 'wish_generated', { 'entered_name': currentName, 'theme': currentTheme });
-                
-                // Show loading immediately
-                showStep(3);
-                const progressBar = document.getElementById('progressBar');
-                const loadingText = document.getElementById('loadingText');
-                
-                // Start a visual progress bar that slows down near the end
-                let progress = 0;
-                loadingText.innerText = "✨ AI is writing your wish...";
-                progressBar.style.width = '0%';
-                
-                const fakeProgressInterval = setInterval(() => {
-                    if (progress < 85) {
-                        progress += Math.random() * 5;
-                        progressBar.style.width = `${Math.min(progress, 85)}%`;
-                    }
-                }, 200);
+            globalName = nameInput.value.trim();
+            globalTheme = document.getElementById('selectedTheme').value;
+            nameInput.blur();
+            showStep(3);
+        });
 
-                // Start API Call
-                const generatedMessage = await generateAIWish(currentName, currentTheme);
-                
-                // API is done! Finish loading animation
-                clearInterval(fakeProgressInterval);
-                progressBar.style.width = '100%';
-                loadingText.innerText = "🎉 All done!";
-                
-                setTimeout(() => {
-                    wishMessage.innerText = generatedMessage;
-                    showStep(4);
-                    triggerConfetti();
-                    if (typeof navigator.vibrate === 'function') navigator.vibrate([200, 100, 200]);
-                }, 400); // Slight delay so user sees 100% completion
+        // Photo Upload Logic
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    globalPhotoData = event.target.result;
+                    photoPreview.src = globalPhotoData;
+                    uploadLabel.classList.add('hidden');
+                    photoPreviewContainer.classList.remove('hidden');
+                    document.getElementById('skipPhotoBtn').classList.add('hidden'); // Hide skip if photo exists
+                };
+                reader.readAsDataURL(file);
             }
         });
+
+        document.getElementById('changePhotoBtn').addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        // Step 3 -> Process API
+        document.getElementById('generateWishBtn').addEventListener('click', startProcessing);
+        document.getElementById('skipPhotoBtn').addEventListener('click', () => {
+            globalPhotoData = null;
+            startProcessing();
+        });
+
+        async function startProcessing() {
+            if (typeof gtag === 'function') gtag('event', 'wish_generated', { 'entered_name': globalName, 'theme': globalTheme, 'has_photo': !!globalPhotoData });
+            
+            document.getElementById('wishName').innerHTML = `Eid Mubarak,<br/>${globalName}! 🌙`;
+            
+            showStep(4);
+            const progressBar = document.getElementById('progressBar');
+            const loadingText = document.getElementById('loadingText');
+            
+            let progress = 0;
+            loadingText.innerText = "✨ AI is writing your wish...";
+            progressBar.style.width = '0%';
+            
+            const fakeProgressInterval = setInterval(() => {
+                if (progress < 85) {
+                    progress += Math.random() * 5;
+                    progressBar.style.width = `${Math.min(progress, 85)}%`;
+                }
+            }, 200);
+
+            const generatedMessage = await generateAIWish(globalName, globalTheme);
+            
+            clearInterval(fakeProgressInterval);
+            progressBar.style.width = '100%';
+            loadingText.innerText = "🎉 All done!";
+            
+            setTimeout(() => {
+                document.getElementById('wishMessage').innerText = generatedMessage;
+                
+                // Handle Photo display in Reward Screen
+                const photoContainer = document.getElementById('rewardPhotoContainer');
+                const moonContainer = document.getElementById('rewardMoonContainer');
+                
+                if (globalPhotoData) {
+                    document.getElementById('rewardPhoto').src = globalPhotoData;
+                    photoContainer.classList.remove('hidden');
+                    moonContainer.classList.add('hidden');
+                } else {
+                    photoContainer.classList.add('hidden');
+                    moonContainer.classList.remove('hidden');
+                }
+
+                showStep(5);
+                triggerConfetti();
+                if (typeof navigator.vibrate === 'function') navigator.vibrate([200, 100, 200]);
+            }, 400); 
+        }
 
         function triggerConfetti() {
             const colors = ['#FBBF24', '#34D399', '#F87171', '#60A5FA', '#A78BFA'];
             const container = document.getElementById('confettiContainer');
             container.innerHTML = ''; 
-            
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < 70; i++) {
                 const conf = document.createElement('div');
@@ -393,63 +453,53 @@
 
         // Sharing Logic
         const shareText = "🎁 Someone has sent you a special Eid surprise! Open it here: ";
+        const getUrl = () => window.location.href.split('?')[0];
 
         document.getElementById('shareWhatsApp').addEventListener('click', () => {
-            const url = window.location.href;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + url)}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + getUrl() + '?utm_source=whatsapp')}`, '_blank');
         });
 
         document.getElementById('shareFacebook').addEventListener('click', () => {
-            const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getUrl() + '?utm_source=facebook')}`, '_blank');
         });
 
         document.getElementById('copyLink').addEventListener('click', async () => {
-            const url = window.location.href;
-            const fullText = shareText + url;
+            const fullText = shareText + getUrl() + '?utm_source=copy_link';
             let success = false;
-
             if (navigator.clipboard && window.isSecureContext) {
-                try {
-                    await navigator.clipboard.writeText(fullText);
-                    success = true;
-                } catch (err) {}
+                try { await navigator.clipboard.writeText(fullText); success = true; } catch (err) {}
             }
-
             if (!success) {
                 const textArea = document.createElement("textarea");
                 textArea.value = fullText;
-                textArea.style.position = "fixed";
-                textArea.style.opacity = "0";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    success = true;
-                } catch (err) {}
+                textArea.style.position = "fixed"; textArea.style.opacity = "0";
+                document.body.appendChild(textArea); textArea.focus(); textArea.select();
+                try { document.execCommand('copy'); success = true; } catch (err) {}
                 document.body.removeChild(textArea);
             }
-
             if (success) {
                 const copyBtn = document.getElementById('copyLink');
                 const originalHtml = copyBtn.innerHTML;
                 copyBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> <span>Copied!</span>';
                 lucide.createIcons(); 
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalHtml;
-                    lucide.createIcons(); 
-                }, 2000);
+                setTimeout(() => { copyBtn.innerHTML = originalHtml; lucide.createIcons(); }, 2000);
             }
         });
 
         document.getElementById('createAnother').addEventListener('click', () => {
             showStep(1);
             nameInput.value = '';
-            continueBtn.setAttribute('disabled', 'true');
-            continueBtn.classList.add('bg-slate-800', 'text-slate-500');
-            continueBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500', 'text-white');
+            globalPhotoData = null;
+            continueToPhotoBtn.setAttribute('disabled', 'true');
+            continueToPhotoBtn.classList.add('bg-slate-800', 'text-slate-500');
+            continueToPhotoBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500', 'text-white');
             document.getElementById('confettiContainer').innerHTML = '';
+            
+            // Reset Photo Input UI
+            photoInput.value = "";
+            uploadLabel.classList.remove('hidden');
+            photoPreviewContainer.classList.add('hidden');
+            document.getElementById('skipPhotoBtn').classList.remove('hidden');
         });
     </script>
 </body>
